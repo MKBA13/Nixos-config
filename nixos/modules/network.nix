@@ -1,25 +1,23 @@
 {pkgs, ... }:
 {
 	networking = {
-		nameservers = ["127.0.0.1"];
-		hostName = "nixos";
-		wireless.iwd = {
-			enable = true;
-			settings = {
-				Network = {
-					EnableIPv6 = true;
-					RoutePriorityOffset = 300;
-				};
-				Settings = {
-					AutoConnect = true;
-				};
-			};
-		};
-		networkmanager = {
-			enable = false;
-		};
-	};
-/*	programs.firejail = {
+    	hostName = "nixos";
+    	wireless.enable = true;  # Включаем поддержку беспроводных сетей
+    	wireless.iwd = {
+      	enable = true;  # Включаем iwd
+      	settings = {
+        	Network = {
+          	EnableIPv6 = true;  # Включаем поддержку IPv6
+          	RoutePriorityOffset = 300;  # Приоритет маршрута
+        };
+        Settings = {
+          AutoConnect = true;  # Автоматическое подключение к известным сетям
+        };
+      };
+    };
+    networkmanager.enable = false;  # Отключаем NetworkManager, если используем iwd
+  };
+	programs.firejail = {
 		enable = true;
 		wrappedBinaries = {
 			chromium = {
@@ -27,5 +25,5 @@
 				profile = "${pkgs.firejail}/etc/firejail/chromium.profile";
 			};
 		};
-	};*/
+	};
 }
