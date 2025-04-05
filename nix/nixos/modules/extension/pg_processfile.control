@@ -1,0 +1,4 @@
+comment = 'PostgreSQL extension to read and write files'
+default_version = '1.0'
+module_pathname = '$libdir/pg_processfile'
+relocatable = true

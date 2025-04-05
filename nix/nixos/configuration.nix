@@ -3,14 +3,13 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 { config, lib, pkgs, ... }:
-
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./modules/bundle.nix
-      ./packages.nix
       ./env.nix
+      ./packages.nix 
     ];
 
   # Use the GRUB 2 boot loader.
@@ -66,12 +65,27 @@
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.vanger = {
-     isNormalUser = true;
-     extraGroups = [ "wheel" "input" "networkmanager"]; # Enable ‘sudo’ for the user.
-     packages = with pkgs; [
-     ];
-   };
+  users = {
+    users = {
+      vanger = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" "input" "networkmanager"]; # Enable ‘sudo’ for the user.
+        packages = with pkgs; [
+        ];
+      };
+      ff = {
+        isSystemUser = true;
+        isNormalUser = false;
+        home = "/home/ff";
+        createHome = true;
+        group = "ollama";
+      };
+    };
+    groups.ollama = {
+      members = ["ff"];
+    };
+  };
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
